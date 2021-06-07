@@ -14,7 +14,7 @@ class MyDefaultRouter(DefaultRouter):
 
 router = MyDefaultRouter()
 
-router.register('user', UserViewSet)
+router.register('user', UserViewSet, basename='users')
 
 
 urlpatterns = [

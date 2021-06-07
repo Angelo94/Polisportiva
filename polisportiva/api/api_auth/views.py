@@ -34,8 +34,13 @@ class UserRegistrationView(APIView):
 
 class UserViewSet(viewsets.ModelViewSet):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'users_list.html'
-
+    template_name = 'user/users_list.html'
     permission_classes = (IsAuthenticated,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        response = super(UserViewSet, self).list(request, *args, **kwargs)
+
+        #serializer_data = UserSerializer(self.queryset, many=True)
+        return Response({'users': response.data})
