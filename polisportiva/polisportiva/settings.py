@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 try:
-    with open('/secrets.json') as f:
+    with open('secrets/secrets.json') as f:
         secrets = json.loads(f.read())
 except:
     print("Missing json secrets")
