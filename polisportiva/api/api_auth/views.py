@@ -19,27 +19,32 @@ class CustomObtainAuthToken(ObtainAuthToken):
 
 
 class UserRegistrationView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+
     def post(self, request, *args, **kwargs):
         try:
             if User.objects.filter(username=request.data['username'], email=request.data['email']).exists():
-                return Response('Username already exists', 400)
+                return Response({"error": "User already exist"}, template_name='user/login.html')
             else:
-                user = User.objects.create_user(username=request.data['username'], password=request.data['password'],
-                                                email=request.data['email'])
+                user = User.objects.create_user(username=request.data['username'],
+                                                password=request.data['password'],
+                                                email=request.data['email'],
+                                                first_name=request.data['first_name'],
+                                                last_name=request.data['last_name'])
                 user.save()
-                return Response("User created", 200)
+                return Response({"info": "Now just log in"}, template_name='user/login.html')
         except Exception as e:
             return Response(e.__str__())
 
 
 class UserViewSet(viewsets.ModelViewSet):
     renderer_classes = [TemplateHTMLRenderer]
-    permission_classes = (IsAuthenticated,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
     def list(self, request, **kwargs):
-        return Response({'users': self.queryset.all()}, template_name='user/users_list.html')
-
-
-
+        #if request.user.is_authenticated:
+        #    return Response({'users': self.queryset.all()}, template_name='user/users_list.html')
+        #else:
+        #    return Response({}, template_name='user/login.html')
+        return Response({}, template_name='user/login.html')
