@@ -39,6 +39,7 @@ class UserRegistrationView(APIView):
 
 class UserViewSet(viewsets.ModelViewSet):
     renderer_classes = [TemplateHTMLRenderer]
+    #permission_classes = (IsAuthenticated,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
