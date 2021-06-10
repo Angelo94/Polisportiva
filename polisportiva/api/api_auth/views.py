@@ -21,7 +21,7 @@ class UserRegistrationView(APIView):
                                                 first_name=request.data['first_name'],
                                                 last_name=request.data['last_name'])
                 user.save()
-                return Response({"info": "Now just log in"}, template_name='user/login.html')
+                return Response({"info": "User correctly created"}, template_name='user/login.html')
         except:
             return Response({"error": "Error during the registration"}, template_name='user/login.html')
 
