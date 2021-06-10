@@ -1,3 +1,5 @@
+from django.contrib.auth import authenticate, login, logout
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -7,15 +9,7 @@ from api.api_auth.serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, generics
 from rest_framework.views import APIView
-
-
-class CustomObtainAuthToken(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({'id': user.id, 'token': token.key})
+from django.shortcuts import redirect
 
 
 class UserRegistrationView(APIView):
@@ -33,19 +27,58 @@ class UserRegistrationView(APIView):
                                                 last_name=request.data['last_name'])
                 user.save()
                 return Response({"info": "Now just log in"}, template_name='user/login.html')
-        except Exception as e:
-            return Response(e.__str__())
+        except:
+            return Response({"error": "Error during the registration"}, template_name='user/login.html')
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = (IsAuthenticated,)
+
     renderer_classes = [TemplateHTMLRenderer]
-    #permission_classes = (IsAuthenticated,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
     def list(self, request, **kwargs):
-        #if request.user.is_authenticated:
-        #    return Response({'users': self.queryset.all()}, template_name='user/users_list.html')
-        #else:
-        #    return Response({}, template_name='user/login.html')
-        return Response({}, template_name='user/login.html')
+        return Response({'users': self.queryset.all()}, template_name='user/users_list.html')
+
+
+class HomeView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+
+    def get(self, request, **kwargs):
+        if request.user.is_authenticated:
+           return Response({}, template_name='home/home.html')
+        else:
+           return Response({}, template_name='user/login.html')
+
+
+class LoginView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    renderer_classes = [TemplateHTMLRenderer]
+
+    def post(self, request, *args, **kwargs):
+
+        if 'name' in request.data:
+            user = User.objects.filter(username=request.data['name'])
+        elif 'email' in request.data:
+            user = User.objects.filter(email=request.data['email'])
+        else:
+            return Response({"error": "username or email not correct"}, template_name='user/login.html')
+
+        if user:
+            if user[0].check_password(request.data['password']):
+                login(request, user[0])
+                return redirect('home')
+            else:
+                return Response({"error": "User does not exist"}, template_name='user/login.html')
+        else:
+            return Response({"error": "User does not exist"}, template_name='user/login.html')
+
+
+class LogoutView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('home')

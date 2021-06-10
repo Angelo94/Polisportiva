@@ -1,4 +1,4 @@
-from api.api_auth.views import UserViewSet, CustomObtainAuthToken, UserRegistrationView
+from api.api_auth.views import UserViewSet, UserRegistrationView, HomeView, LoginView, LogoutView
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
@@ -19,6 +19,9 @@ router.register('user', UserViewSet, basename='users')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('token/', CustomObtainAuthToken.as_view(), name='api_token_auth'),
     path('userregistration/', UserRegistrationView.as_view(), name='userregistration'),
+    path('home/', HomeView.as_view(), name='home'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+
 ]
