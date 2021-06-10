@@ -1,13 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from apps.users.models import User
-from api.api_auth.serializers import UserSerializer
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets, generics
 from rest_framework.views import APIView
 from django.shortcuts import redirect
 
@@ -29,28 +24,6 @@ class UserRegistrationView(APIView):
                 return Response({"info": "Now just log in"}, template_name='user/login.html')
         except:
             return Response({"error": "Error during the registration"}, template_name='user/login.html')
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = (IsAuthenticated,)
-
-    renderer_classes = [TemplateHTMLRenderer]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    def list(self, request, **kwargs):
-        return Response({'users': self.queryset.all()}, template_name='user/users_list.html')
-
-
-class HomeView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-
-    def get(self, request, **kwargs):
-        if request.user.is_authenticated:
-           return Response({}, template_name='home/home.html')
-        else:
-           return Response({}, template_name='user/login.html')
 
 
 class LoginView(APIView):

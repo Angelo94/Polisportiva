@@ -65,7 +65,8 @@ INSTALLED_APPS = [
     'apps.persons',
 
     # APIs
-    'api.api_auth'
+    'api.api_auth',
+    'api.api_main'
 ]
 
 MIDDLEWARE = [
