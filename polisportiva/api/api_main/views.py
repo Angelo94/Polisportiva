@@ -8,6 +8,6 @@ class HomeView(APIView):
 
     def get(self, request):
         if request.user.is_authenticated:
-           return Response({}, template_name='home/home.html')
+           return Response({"user": request.user.username}, template_name='home/home.html')
         else:
            return Response({}, template_name='user/login.html')

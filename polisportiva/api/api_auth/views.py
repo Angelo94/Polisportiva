@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
+
+from api.api_auth.serializers import UserSerializer
 from apps.users.models import User
 from rest_framework.views import APIView
 from django.shortcuts import redirect
@@ -55,3 +57,11 @@ class LogoutView(APIView):
     def post(self, request, *args, **kwargs):
         logout(request)
         return redirect('home')
+
+
+class UserInfoView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+
+    def get(self, request, *args, **kwargs):
+        user_info = UserSerializer(request.user)
+        return Response(user_info.data, template_name='user/users_list.html')

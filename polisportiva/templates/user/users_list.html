@@ -1,8 +1,16 @@
-<html><body>
-<h1>Users</h1>
+
+{% extends 'home/base.html' %}
 <ul>
-    {% for user in users %}
-    <li>{{ user.username }}</li>
-    {% endfor %}
+
 </ul>
-</body></html>
+
+{% block content %}
+    <div class="container-fluid userinfo">
+      <h2>{{ user.username }}</h2>
+      <div class="panel panel-default userinfo-panel">
+        <div class="panel-body">A Basic Panel</div>
+      </div>
+
+
+    </div>
+{% endblock %}
