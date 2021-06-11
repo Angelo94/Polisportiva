@@ -3,8 +3,9 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-    <div class="container-fluid" style="border:1px solid #cecece;">
-        <h3>{% block title %}Home{% endblock %}</h3>
-        <p>Benvenuto {{ user }}</p>
+    <div class="container-fluid home">
+      <div class="panel panel-default home-panel">
+        <div class="panel-body">Benvenuto {{ user }}</div>
+      </div>
     </div>
 {% endblock %}

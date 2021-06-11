@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from api.api_main.views import HomeView
+from api.api_main.views import HomeView, UserInfoView
 
 
 class UserView(DefaultRouter.APIRootView):
@@ -14,4 +14,6 @@ class MyDefaultRouter(DefaultRouter):
 
 urlpatterns = [
     path('home/', HomeView.as_view(), name='home'),
+    path('userinfo/', UserInfoView.as_view(), name='userinfo'),
+
 ]

@@ -59,9 +59,3 @@ class LogoutView(APIView):
         return redirect('home')
 
 
-class UserInfoView(APIView):
-    renderer_classes = [TemplateHTMLRenderer]
-
-    def get(self, request, *args, **kwargs):
-        user_info = UserSerializer(request.user)
-        return Response(user_info.data, template_name='user/users_list.html')
