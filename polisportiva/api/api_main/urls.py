@@ -15,5 +15,6 @@ class MyDefaultRouter(DefaultRouter):
 urlpatterns = [
     path('home/', HomeView.as_view(), name='home'),
     path('userinfo/', UserInfoView.as_view(), name='userinfo'),
+    path('userinfo/<int:pk>', UserInfoView.as_view(), name='user-detail'),
 
 ]
