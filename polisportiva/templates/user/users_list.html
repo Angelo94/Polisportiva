@@ -4,8 +4,45 @@
 {% block content %}
     <div class="container-fluid userinfo">
       <h2>{{ user.username }}</h2>
-      <div class="panel panel-default userinfo-panel">
-        <div class="panel-body">A Basic Panel</div>
+      <div class="panel panel-default userinfo-panel col-md-6 col-md-offset-3">
+        <div class="panel-body">
+            <form  action={% url 'userregistration' %} method="POST">
+              {% csrf_token %}
+              <div class="top-row">
+                <div class="field-wrap">
+                  <label class="col-md-2 col-md-offset-1" for="first_name">
+                    First Name<span class="req">*</span>
+                  </label>
+                  <input type="text" id="first_name" name="first_name" required="" autocomplete="off" value="{{ user.first_name }}">
+                </div>
+                <div class="field-wrap">
+                  <label for="last_name">
+                    Last Name<span class="req">*</span>
+                  </label>
+                  <input type="text" id="last_name" name="last_name" required="" autocomplete="off" value="{{ user.last_name }}">
+                </div>
+              </div>
+              <div class="field-wrap">
+                <label for="username">
+                  Username<span class="req">*</span>
+                </label>
+                <input type="text" id="username" name="username" required="" autocomplete="off" value="{{ user.username }}">
+              </div>
+              <div class="field-wrap">
+                <label for="email">
+                  Email Address<span class="req">*</span>
+                </label>
+                <input type="email" id="email" name="email" required="" autocomplete="off" value="{{ user.email }}">
+              </div>
+              <div class="field-wrap">
+                <label for="password">
+                  Set A Password<span class="req">*</span>
+                </label>
+                <input type="password" id="password" name="password" required="" autocomplete="off">
+              </div>
+              <button type="submit" class="button button-block">Aggiorna info personali</button>
+          </form>
+        </div>
       </div>
     </div>
 {% endblock %}
