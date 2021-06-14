@@ -3,36 +3,54 @@
 
 {% block content %}
     <div class="container-fluid userinfo">
-      <h2>{{ user.username }}</h2>
+      <div class="panel">
+        <h2>Ciao {{ user.username }} aggiorna le tue info</h2>
+      </div>
       <div class="panel panel-default userinfo-panel col-md-6 col-md-offset-3">
         <div class="panel-body">
-            <form action="{% url 'user-detail' pk=user.pk %}" method="POST">>
+            <form action="{% url 'user-detail' pk=user.pk %}" method="POST">
               {% csrf_token %}
               <div class="top-row">
                 <div class="field-wrap">
-                  <label class="col-md-2 col-md-offset-1" for="first_name">
+                  <div class="col-sm-6">
+                  <label for="first_name">
                     First Name<span class="req">*</span>
                   </label>
-                  <input type="text" id="first_name" name="first_name" required="" autocomplete="off" value="{{ user.first_name }}">
+                  </div>
+                  <div class="col-sm-6">
+                  <input class="info-input" type="text" id="first_name" name="first_name" required="" autocomplete="off" value="{{ user.first_name }}">
+                  </div>
                 </div>
                 <div class="field-wrap">
+                  <div class="col-sm-6">
                   <label for="last_name">
                     Last Name<span class="req">*</span>
                   </label>
-                  <input type="text" id="last_name" name="last_name" required="" autocomplete="off" value="{{ user.last_name }}">
+                  </div>
+                  <div class="col-sm-6">
+                  <input class="info-input" type="text" id="last_name" name="last_name" required="" autocomplete="off" value="{{ user.last_name }}">
+                  </div>
                 </div>
               </div>
               <div class="field-wrap">
+                <div class="col-sm-6">
                 <label for="username">
                   Username<span class="req">*</span>
                 </label>
-                <input type="text" id="username" name="username" required="" autocomplete="off" value="{{ user.username }}">
+                </div>
+                  <div class="col-sm-6">
+                <input class="info-input" type="text" id="username" name="username" required="" autocomplete="off" value="{{ user.username }}">
+                </div>
               </div>
               <div class="field-wrap">
+                <div class="col-sm-6">
                 <label for="email">
                   Email Address<span class="req">*</span>
                 </label>
-                <input type="email" id="email" name="email" required="" autocomplete="off" value="{{ user.email }}">
+                </div>
+                <div class="col-sm-6">
+                <input class="info-input" type="email" id="email" name="email" required="" autocomplete="off" value="{{ user.email }}">
+                </div>
               </div>
               <button type="submit" class="button button-block">Aggiorna info personali</button>
           </form>
