@@ -1,3 +1,6 @@
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,6 +17,9 @@ class HomeView(APIView):
            return Response({}, template_name='user/login.html')
 
 
+
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
 class UserInfoView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
 
