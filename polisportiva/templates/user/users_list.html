@@ -11,20 +11,20 @@
             <form action="{% url 'user-detail' pk=user.pk %}" method="POST">
               {% csrf_token %}
               <div class="top-row">
-                <div class="field-wrap">
+                <div class="row" style="margin-top: 3%">
                   <div class="col-sm-6">
                   <label for="first_name">
-                    First Name<span class="req">*</span>
+                    First Name<span class="req"></span>
                   </label>
                   </div>
                   <div class="col-sm-6">
                   <input class="info-input" type="text" id="first_name" name="first_name" required="" autocomplete="off" value="{{ user.first_name }}">
                   </div>
                 </div>
-                <div class="field-wrap">
+                <div class="row" style="margin-top: 3%">
                   <div class="col-sm-6">
                   <label for="last_name">
-                    Last Name<span class="req">*</span>
+                    Last Name<span class="req"></span>
                   </label>
                   </div>
                   <div class="col-sm-6">
@@ -32,27 +32,27 @@
                   </div>
                 </div>
               </div>
-              <div class="field-wrap">
+              <div class="row" style="margin-top: 3%">
                 <div class="col-sm-6">
                 <label for="username">
-                  Username<span class="req">*</span>
+                  Username<span class="req"></span>
                 </label>
                 </div>
                   <div class="col-sm-6">
                 <input class="info-input" type="text" id="username" name="username" required="" autocomplete="off" value="{{ user.username }}">
                 </div>
               </div>
-              <div class="field-wrap">
+              <div class="row" style="margin-top: 3%">
                 <div class="col-sm-6">
                 <label for="email">
-                  Email Address<span class="req">*</span>
+                  Email Address<span class="req"></span>
                 </label>
                 </div>
                 <div class="col-sm-6">
                 <input class="info-input" type="email" id="email" name="email" required="" autocomplete="off" value="{{ user.email }}">
                 </div>
               </div>
-              <button type="submit" class="button button-block">Aggiorna info personali</button>
+              <button class="btn-6" type="submit" class="button button-block" style="margin-top: 3%">Aggiorna info personali</button>
           </form>
         </div>
       </div>
